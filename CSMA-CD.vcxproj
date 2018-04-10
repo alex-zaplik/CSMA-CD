@@ -115,6 +115,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Ethernet.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Transmitter.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Ethernet.h" />
+    <ClInclude Include="PacketPart.h" />
+    <ClInclude Include="Transmitter.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
