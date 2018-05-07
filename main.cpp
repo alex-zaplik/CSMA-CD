@@ -9,9 +9,9 @@
 #include "Transmitter.h"
 
 int main() {
-	int length = 75;
-	double prob = 1.0 / length / 5;
-	int packet_length = (int)(length * 0.2);
+	int length = 250;
+	double prob = 0.25;
+	int packet_length = (int)(length * 2);
 
 	using namespace std::chrono_literals;
 
@@ -22,7 +22,7 @@ int main() {
 	Ethernet* medium = new Ethernet(length);
 	std::vector<Transmitter> transmitters;
 	transmitters.push_back(Transmitter(0, medium, 0,          prob, packet_length));
-	// transmitters.push_back(Transmitter(1, medium, length / 2, prob, packet_length));
+	transmitters.push_back(Transmitter(1, medium, length / 2, prob, packet_length));
 	transmitters.push_back(Transmitter(2, medium, length - 1, prob, packet_length));
 
 	// medium->print();
@@ -47,8 +47,8 @@ int main() {
 			max_retransmissions = std::max(max_retransmissions, (*it).get_retransmissions());
 		}
 
-		medium->print();
-		std::this_thread::sleep_for(50ms);
+		// medium->print();
+		// std::this_thread::sleep_for(50ms);
 	}
 
 	std::cout << "\n\nMaximum number of retransmissions: " << max_retransmissions << std::endl;
