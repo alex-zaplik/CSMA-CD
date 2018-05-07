@@ -124,6 +124,9 @@
     <ClInclude Include="PacketPart.h" />
     <ClInclude Include="Transmitter.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Lista_3.html" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

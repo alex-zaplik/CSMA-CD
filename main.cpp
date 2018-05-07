@@ -10,8 +10,8 @@
 
 int main() {
 	int length = 75;
-	double prob = 1.0 / length;
-	int packet_length = (int)(length * 2.0);
+	double prob = 1.0 / length / 5;
+	int packet_length = (int)(length * 0.2);
 
 	using namespace std::chrono_literals;
 

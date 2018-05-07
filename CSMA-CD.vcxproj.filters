@@ -36,4 +36,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Lista_3.html">
+      <Filter>Resource Files</Filter>
+    </None>
+  </ItemGroup>
 </Project>
