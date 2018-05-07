@@ -27,22 +27,22 @@ void Ethernet::propagate()
 		{
 		case PacketPartDir::BOTH:
 			if (i < length - 1)
-				single_propagate(tmp, i + 1, cable[i].val, PacketPartDir::RIGHT);
+				single_propagate(cable, tmp, i + 1, cable[i].val, PacketPartDir::RIGHT);
 			
 			if (i > 0)
-				single_propagate(tmp, i - 1, cable[i].val, PacketPartDir::LEFT);
+				single_propagate(cable, tmp, i - 1, cable[i].val, PacketPartDir::LEFT);
 			
 			break;
 
 		case PacketPartDir::LEFT:
 			if (i > 0)
-				single_propagate(tmp, i - 1, cable[i].val, PacketPartDir::LEFT);
+				single_propagate(cable, tmp, i - 1, cable[i].val, PacketPartDir::LEFT);
 			
 			break;
 
 		case PacketPartDir::RIGHT:
 			if (i < length - 1)
-				single_propagate(tmp, i + 1, cable[i].val, PacketPartDir::RIGHT);
+				single_propagate(cable, tmp, i + 1, cable[i].val, PacketPartDir::RIGHT);
 			
 			break;
 
@@ -54,18 +54,18 @@ void Ethernet::propagate()
 	cable.swap(tmp);
 }
 
-void Ethernet::single_propagate(std::vector<PacketPart> &tmp, int i, char val, PacketPartDir dir)
+void Ethernet::single_propagate(std::vector<PacketPart> &curr, std::vector<PacketPart> &tmp, int i, char val, PacketPartDir dir)
 {
-	if (tmp[i].val == 0)
+	if (tmp[i].val != 0)
 	{
-		tmp[i].dir = dir;
+		tmp[i].val = 'x';
+		tmp[i].dir = PacketPartDir::BOTH;
 	}
 	else
 	{
-		tmp[i].dir = PacketPartDir::BOTH;
+		tmp[i].val = val;
+		tmp[i].dir = dir;
 	}
-
-	tmp[i].val += val;
 }
 
 bool Ethernet::insert(int entry_point, char val)
@@ -76,7 +76,9 @@ bool Ethernet::insert(int entry_point, char val)
 		return false;
 	}
 	
-	cable[entry_point].val += val;
+	if (cable[entry_point].val == 0) cable[entry_point].val = val;
+	else cable[entry_point].val = 'x';
+
 	cable[entry_point].dir = PacketPartDir::BOTH;
 
 	return true;
@@ -106,6 +108,6 @@ void Ethernet::print()
 
 char Ethernet::clamp_char(char c)
 {
-	if ((c > 'z' || c < 'a') && c != 'X' && c != 0) return '.';
+	if ((c < 'A' || c > 'Z') && c != 'x' && c != 0) return '.';
 	return c;
 }

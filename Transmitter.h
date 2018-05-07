@@ -10,9 +10,10 @@ private:
 	Ethernet * medium;
 	int entry_point;
 
+	double p;
+
 	int min_packet_time;
-	int min_time;
-	int curr_time = 0;
+	int curr_time = -1;
 
 	int to_send = 0;
 	char last_sent = 0;
@@ -20,17 +21,15 @@ private:
 	bool collision_detected = false;
 	int retransmissions = 0;
 
-	void send_next();
-	int get_wait_time();
+	void send_next(unsigned int &collison_count);
 	int get_retransmission_time();
 
 public:
-	Transmitter(int id, Ethernet* medium, int entry_point, int min_packet_time, int avg_time) :
-		id{ id }, medium{ medium }, entry_point{ entry_point },
-		min_packet_time{ min_packet_time }, min_time{ avg_time }, curr_time{ get_wait_time() } {}
+	Transmitter(int id, Ethernet* medium, int entry_point, double p, int min_packet_time) :
+		id{ id }, medium{ medium }, entry_point{ entry_point }, p { p }, min_packet_time{ min_packet_time } {}
 	~Transmitter();
 
-	bool tick();
+	bool tick(unsigned int &collison_count);
 	int get_retransmissions();
 };
 
